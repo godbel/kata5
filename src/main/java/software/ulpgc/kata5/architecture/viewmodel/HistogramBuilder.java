@@ -1,9 +1,8 @@
-package software.ulpgc.kata4.architecture.viewmodel;
+package software.ulpgc.kata5.architecture.viewmodel;
 
-import software.ulpgc.kata4.architecture.model.Movie;
+import software.ulpgc.kata5.architecture.model.Movie;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -13,8 +12,8 @@ public class HistogramBuilder {
     private final Stream<Movie> movies;
     private final Map<String, String> labels;
 
-    public static HistogramBuilder with(Stream<Movie> movies){
-        if(movies == null) throw new IllegalArgumentException("movies cannot be null");
+    public static HistogramBuilder with(Stream<Movie> movies) {
+        if (movies == null) throw new IllegalArgumentException("movies cannot be null");
 
         return new HistogramBuilder(movies);
     }

@@ -1,7 +1,7 @@
-package software.ulpgc.kata4.application;
+package software.ulpgc.kata5.application;
 
-import software.ulpgc.kata4.architecture.io.Store;
-import software.ulpgc.kata4.architecture.model.Movie;
+import software.ulpgc.kata5.architecture.io.Store;
+import software.ulpgc.kata5.architecture.model.Movie;
 
 import java.io.*;
 import java.net.URL;
@@ -25,7 +25,7 @@ public class RemoteStore implements Store {
         return loadFrom(new URL(REMOTE_URL));
     }
 
-    private Stream<Movie> loadFrom(URL url){
+    private Stream<Movie> loadFrom(URL url) {
         try {
             return loadFrom(url.openConnection());
         } catch (IOException e) {
@@ -45,13 +45,12 @@ public class RemoteStore implements Store {
         return reader.lines().skip(1).map(deserializar);
     }
 
-    private BufferedReader toReader(InputStream is) throws IOException{
+    private BufferedReader toReader(InputStream is) throws IOException {
         return new BufferedReader((new InputStreamReader(is)));
     }
 
-    private InputStream unzip(InputStream is) throws IOException{
+    private InputStream unzip(InputStream is) throws IOException {
         return new GZIPInputStream(new BufferedInputStream(is));
     }
-
 
 }

@@ -1,6 +1,4 @@
-package software.ulpgc.kata4.architecture.viewmodel;
-
-import org.jfree.data.xy.XYSeries;
+package software.ulpgc.kata5.architecture.viewmodel;
 
 import java.util.HashMap;
 import java.util.Iterator;
