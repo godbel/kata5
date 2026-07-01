@@ -8,6 +8,6 @@ import java.io.IOException;
 
 public class Main {
     static void main() throws IOException {
-        //Desktop.creat(new RemoteStore(TsvMovieParser::from)).display().setVisible(true);
+        Desktop.creat(new RemoteStore(TsvMovieParser::from)).display().setVisible(true);
     }
 }

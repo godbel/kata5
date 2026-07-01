@@ -10,20 +10,20 @@ import java.util.stream.Stream;
 
 public class DatabaseRecorder implements Recorder {
 
-
     private final Connection connection;
     private final PreparedStatement statement;
     private int count;
 
     public DatabaseRecorder(Connection connection) throws SQLException {
         this.connection = connection;
-        this.statement = connection.prepareStatement("INSERT INTO movies (title, year, duration) VALUES (?, ?, ?)");
-        int count = 0;
+        createTableIfNotExists();
+        this.statement = connection.prepareStatement("INSERT INTO movies (title, years, duration) VALUES (?, ?, ?)");
+        this.count = 0;
     }
 
-    private void createTableIfNotExists() throws SQLException{
+    private void createTableIfNotExists() throws SQLException {
         connection.createStatement()
-                .execute("CREATE TABLE IF NOT EXISTS movies (title STRING, years INTEGER, duration INTEGER");
+                .execute("CREATE TABLE IF NOT EXISTS movies (title TEXT, years INTEGER, duration INTEGER)");
     }
 
     @Override
@@ -38,32 +38,32 @@ public class DatabaseRecorder implements Recorder {
             });
             flush();
             connection.commit();
-        } catch (SQLException e){
-            throw new RuntimeException();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private void record(Movie movie) throws SQLException{
+    private void record(Movie movie) throws SQLException {
         write(movie);
         flushIfNeeded();
     }
 
     private void flushIfNeeded() throws SQLException {
-        if(mustFlush()) flush();
+        if (mustFlush()) flush();
     }
 
     private boolean mustFlush() {
         return ++count % 10_000 == 0;
     }
 
-    private void write(Movie movie) throws SQLException{
+    private void write(Movie movie) throws SQLException {
         statement.setString(1, movie.name());
         statement.setInt(2, movie.years());
         statement.setInt(3, movie.duration());
         statement.addBatch();
     }
 
-    private void flush() throws SQLException{
-            statement.executeBatch();
+    private void flush() throws SQLException {
+        statement.executeBatch();
     }
 }
